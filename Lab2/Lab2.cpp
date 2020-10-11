@@ -2,6 +2,7 @@
 // Created by YaTeb on 10/10/2020.
 //
 #include <iostream>
+#include <string>
 using namespace std;
 
 struct Time {
@@ -139,6 +140,22 @@ bool operator==(const TimePoint &left, const TimePoint &right ){
     return (left.time.hour == right.time.hour) && (left.time.min == right.time.min) && (left.time.sec == right.time.sec);
 }
 
+
+TimePoint operator""_time(const char *str, size_t n){
+    int result[3];
+
+    string s(str);
+    s+= ':';
+    short count = 0; int last = 0;
+    for (int i = 0; i <= n; ++i) {
+        if(s[i] == ':' && count < 3){
+            result[count] = stoi(s.substr(last, i - last + 1));
+            last = i + 1;
+            ++count;
+        }
+    }
+    return TimePoint(result[0],result[1],result[2]);
+}
 
 
 int main(){
