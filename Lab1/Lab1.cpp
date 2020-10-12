@@ -53,19 +53,11 @@ public:
     };
 
     int isBiggerArea(Rectangle a){
-        if (a.area() < area()){
-            return 1;
-        }else{
-            return 0;
-        }
+        return (a.area() < area());
     };
 
     int isBiggerPerimeter(Rectangle a){
-        if(a.perimeter() < perimeter()){
-            return 1;
-        }else{
-            return 0;
-        }
+        return (a.perimeter() < perimeter());
     };
 
     Rectangle LilRect(Rectangle a){
@@ -86,22 +78,34 @@ public:
         Rectangle *BigBro = new Rectangle;
         BigBro->y2 = fmax(a.y2,y2);
         BigBro->y1 = fmin(a.y1,y1);
-        BigBro->x1 = fmax(fmax(x1,x2),fmax(a.x1,a.x2));
-        BigBro->x2 = fmin(fmin(x1,x2),fmin(a.x1,a.x2));
+        BigBro->x1 = fmin(fmin(x1,x2),fmin(a.x1,a.x2));
+        BigBro->x2 = fmax(fmax(x1,x2),fmax(a.x1,a.x2));
         return *BigBro;
     };
-
-private:
     double x1,y1,x2,y2;
+
+
 };
 
 int main(){
-    Rectangle First(0,0,10,10);
-    Rectangle Second(0,0,20,20);
-    cout << First.area() << "  hhh ";
-    Rectangle Third;
-    Second.axis(5,0);
-    cout << First.isBiggerPerimeter(Second) << "   " << Second.isBiggerArea(First) << "  end ";
-    Third = First.LilRect(Second);
-    cout << Third.perimeter();
+double a,b,c,d;
+cout << "vvedite koordinati pervoi figuri\n";
+cin >> a >>b >> c >>d;
+Rectangle First(a,b,c,d);
+cout << "vvedite koordinati vtoroi figuri\n";
+cin >> a >>b >> c >>d;
+Rectangle Second(a,b,c,d);
+ cout << "area of first rectangle " << First.area() << "\n";
+ cout << "Perimeter of second rectangle " << Second.perimeter() <<"\n";
+ Rectangle Third;
+ Third = First.LilRect(Second);
+ cout <<"Koordinati ih peresechenia "<< Third.x1 << " " << Third.y1 << " " << Third.x2 << " " << Third.y2 << " \n";
+ Third = First.BigRect(Second);
+ cout <<"Koordinati ih obiedinenia "<< Third.x1 << " " << Third.y1 << " " << Third.x2 << " " << Third.y2 << " \n";
+ cout <<" Bolshe li area pervogo chem y vtorogo "<< First.isBiggerArea(Second) << " \n";
+ cout <<" Bolshe li perimeter pervogo chem y vtorogo "<< First.isBiggerPerimeter(Second)<< "\n";
+ cout << " Peremestim 1 Rectangle po osyam \n";
+ cin >> a >>b ;
+ First.axis(a,b);
+ cout << "\nNovie coordinati: \n"<< First.x1 << " " << First.y1 << " " << First.x2 << " " << First.y2 << " \n";
 }

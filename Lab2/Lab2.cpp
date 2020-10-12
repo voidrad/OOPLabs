@@ -159,30 +159,13 @@ TimePoint operator""_time(const char *str, size_t n){
 
 
 int main(){
-    TimePoint First (14,59, 36);
-    TimePoint Second (17,59, 36);
-    TimePoint Third;
-    First.SeeTime();
-    First.SumSec(87);
-    First.SeeTime();
-    First.MinSec(1400);
-    First.SeeTime();
-    cout << First.ToSeconds() << "   " <<First.ToMinutes() << "  \n";
-    Second.SeeTime();
-    Third = First + Second;
-    Third.SeeTime();
-    Third.FromSeconds(43200);
-    Third.SeeTime();
-    Third.MinSec(64741);
-    Third.SeeTime();
-    Third.MinSec(43200);
-    Third.MinSec(43200);
-    Third.SeeTime();
-    First = Third;
-    Third.SumSec(14000);
-    First.SeeTime();
-    Third.SeeTime();
-    First.FromMinutes(13000);
-    First.SeeTime();
-    cout << (First > Third) << " " << (First == Third) << "  " << (First < Third);
+    int a,b,c;
+TimePoint First ;
+First ="14:03:30"_time;
+First.SeeTime();
+cout << "Vvedite vremya\n";
+cin >> a >> b >>c;
+TimePoint Second(a,b,c);
+cout << "time in seconds " << Second.ToSeconds() << " \n";
+cout << "time in minutes " << Second.ToMinutes() << " \n";
 }
