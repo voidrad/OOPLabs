@@ -3,4 +3,4 @@ project(Lab3)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(Lab3 Lab3.cpp)
+add_executable(Lab3 Lab3.cpp Figures.hpp)

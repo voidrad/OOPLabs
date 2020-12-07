@@ -3,113 +3,88 @@
 //
 #include "vector"
 #include "iostream"
+#include "Figures.hpp"
 using namespace std;
 
-struct DotCoords{
-    double x,y;
-};
-
-class Figure {
-public:
-    Figure(){
-        S = getSquare();
-    };
-
-
-    double getSquare(){
-        return height * midSum;
-    }
-
-    virtual void coordsOut(){}
-
-    virtual DotCoords getCenter(){}
-
-    double height,midSum,S;
-};
-
-class Degrees: public Figure {
-public:
-    Degrees(){
-        height = rightCorner.y - leftCorner.y;
-        midSum = rightCorner.x - leftCorner.x;
-    };
-
-    DotCoords getCenter(){
-        DotCoords result;
-        result.x =  (rightCorner.x - leftCorner.x)/2 + leftCorner.x;
-        result.y = (rightCorner.y - leftCorner.y)/2 + leftCorner.y;
-        return result;
-    }
-
-    void coordsOut(){
-        cout <<"\nКоординаты четырех точек данной фигуры:\n A = (" <<leftCorner.x <<" " <<rightCorner.y<<") \n";
-        cout <<"B = (" <<rightCorner.x <<" " <<rightCorner.y<<") \n";
-        cout <<"C = (" <<rightCorner.x <<" " <<leftCorner.y<<") \n";
-        cout <<"D = (" <<leftCorner.x <<" " <<leftCorner.y<<") \n";
-    }
-
-    DotCoords leftCorner,rightCorner;
-};
-
-
-class Square: public Degrees {
-public:
-    Square(DotCoords lc, DotCoords rc){
-        leftCorner = lc;
-        rightCorner = rc;
-    }
-
-
-
-};
-
-
-class Rectangle: public Degrees {
-public:
-    Rectangle(DotCoords lc, DotCoords rc){
-        leftCorner = lc;
-        rightCorner = rc;
-    }
-
-
-
-};
-
-
-class Trapezoid: public Figure {
-public:
-    Trapezoid(DotCoords ldc, DotCoords luc,DotCoords ruc, DotCoords rdc){
-
-        leftDownCorner = ldc;
-        leftUpCorner = luc;
-        rightUpCorner = ruc;
-        rightDownCorner = rdc;
-
-        height = luc.y - ldc.y;
-        midSum = (ruc.x-luc.x+rdc.x-ldc.x)/2;
-    }
-
-    DotCoords getCenter(){
-        DotCoords result;
-        result.y = rightDownCorner.y + height/2;
-        result.x =((rightDownCorner.x/2+leftDownCorner.x/2)+(rightUpCorner.x/2+leftUpCorner.x/2))/2;
-        return result;
-    }
-
-    void coordsOut(){
-        cout <<"\nКоординаты четырех точек данной фигуры:\n A = (" <<leftUpCorner.x <<" " <<leftUpCorner.y<<") \n";
-        cout <<"B = (" <<rightUpCorner.x <<" " <<rightUpCorner.y<<") \n";
-        cout <<"C = (" <<rightDownCorner.x <<" " <<rightDownCorner.y<<") \n";
-        cout <<"D = (" <<leftDownCorner.x <<" " <<leftDownCorner.y<<") \n";
-    }
-
-
-
-    DotCoords leftDownCorner,leftUpCorner,rightDownCorner,rightUpCorner;
-};
 
 int main(){
+vector<Figure> Vector;
 
+    int caseSwitch = 1;
+    while(true) {
+        cout << "\n______________________________" << endl;
+        cout << "|                            |" << endl;
+        cout << "|            Menu            |" << endl;
+        cout << "|____________________________|" << endl;
+        cout << "|                            |" << endl;
+        cout << "|1  - Add Figure             |" << endl;
+        cout << "|2  - Delete Figure          |" << endl;
+        cout << "|3  - Sum of areas           |" << endl;
+        cout << "|4  - Working with a figure  |" << endl;
+        cout << "|0  - Stop                   |" << endl;
+        cout << "|____________________________|" << endl;
+        cin >> caseSwitch;
+        switch (caseSwitch) {
+            case 0:return 1;
+            case 1:{
+                cout<< "Which kind of figure would you like to add?\n 1:Square\n2:Rectangle\n3:Trapezoid\n";
+                int addFig;
+                cin>> addFig;
+                switch (addFig) {
+                    case 1:{cout<< "\nInsert coords of 2 diagonal angles";
+                            Vector.push_back(*new Square());}continue;
+                    case 2:{cout<< "\nInsert coords of 2 diagonal angles";
+                        Vector.push_back(*new Rectangle());}
+                        continue;
+                    case 3:{cout<< "\nInsert coords of 4 angles";
+                        Vector.push_back(*new Trapezoid());}continue;
+                    default:cout<<"\nThat's not good!\n";   continue;
+                }
+            }
+            case 2:{
+                cout << "\nchoose a Figure to delete:\n";
+                int Del;
+                cin >> Del;
+                if ((Del<0) || (Del > Vector.size())){
+                    cout<< "figure not available"; continue;
+                } else {
+                }
+            }continue;
+            case 3:{
+                for(int i = 0;i<= Vector.size();i++){
+                    double Result = 0;
+                    Result += Vector[i].getSquare();
+                    cout << Result;
+                }
+            }continue;
+            case 4:{
+                cout << "\nchoose a Figure to work with:\n";
+                int Wrk;
+                cin >> Wrk;
+                if ((Wrk<0) || (Wrk > Vector.size())){
+                    cout<< "figure not available"; continue;
+                } else {int Act;
+                    cout << "\nWhat do you want to do with figure?\n 1:Get Center\n 2: Get her Coords\n 3: Get her Square\n";
+                    cin >>  Act;
+                    switch (Act) {
+                        case 1:{
+                            cout << "Center x is: " <<Vector[Wrk].getCenter().x << "y is " <<Vector[Wrk].getCenter().y;
+                        }continue;
+                        case 2:{
+                           Vector[Wrk].coordsOut();
+                        }continue;
+                        case 3:{
+                            cout<< "\n Her Square is " << Vector[Wrk].getSquare();
+                        }continue;
+                    }
+                }
+            }
+            default:{
+                cout<< "\nSomethings wrong, Try again\n";
+            }
+        }
 
+        return 0;
+    }
     return 0;
 }
