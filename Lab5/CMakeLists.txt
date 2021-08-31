@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
-project(Lab3)
+project(Lab5)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(Lab3 Lab3.cpp)
+add_executable(Lab5 Lab5.cpp list.hpp square.hpp )

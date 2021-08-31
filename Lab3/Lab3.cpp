@@ -1,90 +1,236 @@
 //
 // Created by YaTeb on 10/17/2020.
 //
-#include "vector"
-#include "iostream"
-#include "Figures.hpp"
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <limits>
+
+
 using namespace std;
 
+struct Point {
+    Point() { 0, 0; };
+    Point(double new_x, double new_y) {
+        x = new_x;
+        y = new_y;
+    }
+    double x;
+    double y;
+};
 
-int main(){
-vector<Figure> Vector;
+istream& operator>>(istream& input, Point& point) {
+    return input >> point.x >> point.y;
+}
 
-    int caseSwitch = 1;
-    while(true) {
-        cout << "\n______________________________" << endl;
-        cout << "|                            |" << endl;
-        cout << "|            Menu            |" << endl;
-        cout << "|____________________________|" << endl;
-        cout << "|                            |" << endl;
-        cout << "|1  - Add Figure             |" << endl;
-        cout << "|2  - Delete Figure          |" << endl;
-        cout << "|3  - Sum of areas           |" << endl;
-        cout << "|4  - Working with a figure  |" << endl;
-        cout << "|0  - Stop                   |" << endl;
-        cout << "|____________________________|" << endl;
-        cin >> caseSwitch;
-        switch (caseSwitch) {
-            case 0:return 1;
-            case 1:{
-                cout<< "Which kind of figure would you like to add?\n 1:Square\n2:Rectangle\n3:Trapezoid\n";
-                int addFig;
-                cin>> addFig;
-                switch (addFig) {
-                    case 1:{cout<< "\nInsert coords of 2 diagonal angles";
-                            Vector.push_back(*new Square());}continue;
-                    case 2:{cout<< "\nInsert coords of 2 diagonal angles";
-                        Vector.push_back(*new Rectangle());}
-                        continue;
-                    case 3:{cout<< "\nInsert coords of 4 angles";
-                        Vector.push_back(*new Trapezoid());}continue;
-                    default:cout<<"\nThat's not good!\n";   continue;
-                }
-            }
-            case 2:{
-                cout << "\nchoose a Figure to delete:\n";
-                int Del;
-                cin >> Del;
-                if ((Del<0) || (Del > Vector.size())){
-                    cout<< "figure not available"; continue;
-                } else {
-                }
-            }continue;
-            case 3:{
-                for(int i = 0;i<= Vector.size();i++){
-                    double Result = 0;
-                    Result += Vector[i].getSquare();
-                    cout << Result;
-                }
-            }continue;
-            case 4:{
-                cout << "\nchoose a Figure to work with:\n";
-                int Wrk;
-                cin >> Wrk;
-                if ((Wrk<0) || (Wrk > Vector.size())){
-                    cout<< "figure not available"; continue;
-                } else {int Act;
-                    cout << "\nWhat do you want to do with figure?\n 1:Get Center\n 2: Get her Coords\n 3: Get her Square\n";
-                    cin >>  Act;
-                    switch (Act) {
-                        case 1:{
-                            cout << "Center x is: " <<Vector[Wrk].getCenter().x << "y is " <<Vector[Wrk].getCenter().y;
-                        }continue;
-                        case 2:{
-                           Vector[Wrk].coordsOut();
-                        }continue;
-                        case 3:{
-                            cout<< "\n Her Square is " << Vector[Wrk].getSquare();
-                        }continue;
-                    }
-                }
-            }
-            default:{
-                cout<< "\nSomethings wrong, Try again\n";
-            }
+ostream& operator<<(ostream& output,const Point& point) {
+    return output << "(" << point.x << "," << point.y << ")";
+}
+
+class Figure {
+public:
+    virtual Point Center() const = 0;
+    virtual ostream& Print(ostream& output) = 0;
+    virtual double Area() const = 0;
+    virtual ~Figure(){};
+protected:
+    Point a;
+    Point b;
+    Point c;
+    Point d;
+};
+
+class Square : public Figure {
+public:
+    Square() {};
+    Square(Point A, Point B, Point C, Point D) { a = A; b = B; c = C; d = D; };
+     Point Center()const override {
+        Point ans;
+        ans.x = (a.x + c.x) / 2;
+        ans.y = (a.y + c.y) / 2;
+        return ans;
+    }
+    double Area()const override{
+        Point d1;
+        double diag;
+        d1.x = abs(c.x - a.x);
+        d1.y = abs(c.y - a.y);
+        diag = sqrt(d1.x*d1.x + d1.y*d1.y);
+        return diag*diag / 2;
+    }
+    ostream& Print (ostream& output) override{
+        output << "A" << a << '\n' << "B" << b << '\n' << "C" << c << '\n' << "D" << d << '\n';
+        return output;
+    }
+private:
+    Point a;
+    Point b;
+    Point c;
+    Point d;
+};
+
+class Rectangle : public Figure {
+public:
+    Rectangle() {};
+    Rectangle(Point A, Point B, Point C, Point D) { a = A; b = B; c = C; d = D; };
+    Point Center()const override {
+        Point ans;
+        ans.x = (a.x + c.x) / 2;
+        ans.y = (a.y + c.y) / 2;
+        return ans;
+    }
+    double Area()const override {
+        return abs(a.x*b.y + b.x*c.y + c.x*d.y + d.x*a.y - b.x*a.y - c.x*b.y - d.x*c.y - a.x*d.y);
+    }
+    ostream& Print(ostream& output) {
+        output << "A" << a << '\n' << "B" << b << '\n' << "C" << c << '\n' << "D" << d << '\n';
+        return output;
+    }
+private:
+    Point a;
+    Point b;
+    Point c;
+    Point d;
+};
+
+class Trapezoid : public Figure {
+public:
+    Trapezoid() {};
+    Trapezoid(Point A, Point B, Point C, Point D) { a = A; b = B; c = C; d = D; };
+    Point Center()const override {
+        Point ans;
+        ans.x = (a.x + b.x + c.x + d.x) / 4;
+        ans.y = (a.y + b.y + c.y + d.y) / 4;
+        return ans;
+    }
+    double Area()const override {
+        return abs(a.x*b.y + b.x*c.y + c.x*d.y + d.x*a.y - b.x*a.y - c.x*b.y - d.x*c.y - a.x*d.y);
+    }
+    ostream& Print(ostream& output) {
+        output << "A" << a << '\n' << "B" << b << '\n' << "C" << c << '\n' << "D" << d << '\n';
+        return output;
+    }
+private:
+    Point a;
+    Point b;
+    Point c;
+    Point d;
+};
+
+double lenght(Point a, Point b) {
+    return sqrt((b.x - a.x)*(b.x - a.x) + ((b.y - a.y)*(b.y - a.y)));
+}
+
+int CorrectInput(Point& a, Point& b, Point& c, Point& d, int fig){
+    if ((a.x == c.x && a.y == c.y) || (b.x == d.x && b.y == d.y)) {
+        return 1;
+    }
+    double len_ab = lenght(a, b);
+    double len_bc = lenght(b, c);
+    double len_cd = lenght(c, d);
+    double len_da = lenght(d, a);
+    double len_ac = lenght(a, c);
+    double len_bd = lenght(b, d);
+    if (fig == 1) {
+        if (abs(len_cd - len_ab)<numeric_limits<double>::epsilon() &&
+            abs(len_cd - len_bc)<numeric_limits<double>::epsilon() &&
+            abs(len_cd - len_da)<numeric_limits<double>::epsilon() &&
+            abs(len_bd - len_ac)<numeric_limits<double>::epsilon()) {
+            return 0;
         }
+        return 1;
+    }
 
+    if (fig == 2) {
+        if (abs(len_ab - len_cd)<numeric_limits<double>::epsilon() &&
+            abs(len_bc - len_da)<numeric_limits<double>::epsilon() &&
+            abs(len_ac - len_bd)<numeric_limits<double>::epsilon()) {
+            return 0;
+        }
+        return 1;
+    }
+
+    if (fig == 3 ) {
+        if (abs(len_ab - len_cd)<numeric_limits<double>::epsilon() &&
+            abs(len_ac - len_bd)<numeric_limits<double>::epsilon()) {
+            return 0;
+        }
+        return 1;
+    }
+    return 0;
+}
+
+int main() {
+
+
+
+    vector<Figure*> figures;
+    Figure* f = nullptr;
+    Point a, b, c, d;
+    int t;
+    int count_sq = 0, count_rest = 0, count_trap = 0;
+    cout << "Enter the number of squares, restangles, trapezoids:" << '\n';
+    cin >> count_sq >> count_rest >> count_trap;
+    if (count_sq < 0 || count_rest < 0 || count_trap < 0) {
+        cerr << "Error input: count";
+        return 1;
+    }
+    if (count_sq == 0 && count_rest == 0 && count_trap == 0) {
         return 0;
+    }
+
+    for (int i = 0; i < count_sq; ++i) {
+        cout << "Enter squares:" << '\n';
+        cin >> a >> b >> c >> d;
+        t = CorrectInput(a, b, c, d, 1);
+        if(t == 1) { cerr << "Error input: square"; return 2; }
+        f = new Square{a,b,c,d};
+        figures.push_back(f);
+    }
+    for (int i = 0; i < count_rest; ++i) {
+        cout << "Enter rectangle:" << '\n';
+        cin >> a >> b >> c >> d;
+        t = CorrectInput(a, b, c, d, 2);
+        if (t == 1) { cerr << "Error input: rectangle"; return 3; }
+        Rectangle r(a, b, c, d);
+        f = new Rectangle{ a,b,c,d };
+        figures.push_back(f);
+    }
+    for (int i = 0; i < count_trap; ++i) {
+        cout << "Enter trapezoid:" << '\n';
+        cin >> a >> b >> c >> d;
+        t = CorrectInput(a, b, c, d, 3);
+        if (t == 1) { cerr << "Error input: trapezoid"; return 4; }
+        Trapezoid tr(a, b, c, d);
+        f = new Trapezoid{ a,b,c,d };
+        figures.push_back(f);
+    }
+    int ind = -1;
+    cout << "\nWant to delete a figure? \nSpecify the index of the figure.\n" <<
+         "If you don't want to delete the figure, press -1\n";
+    cin >> ind;
+    if (ind > -1 && ind < figures.size()) {
+        figures.erase(figures.begin() + (ind-1));
+        cout << "Delete successfully\n";
+    }
+    else
+        cout << "Delete error\n";
+    for (ind; ind < figures.size()-1; ++ind) {
+        figures[ind] = figures[ind + 1];
+    }
+    figures.pop_back();
+
+    double sum_area = 0;
+    for (int i = 0; i <= figures.size(); ++i) {
+        cout <<"No:"<< i << '\n' << "Figure coordinates:" << '\n';
+        figures[i]->Print(cout);
+        cout << "Figure center: " << figures[i]->Center() << '\n';
+        cout << "Figure area: " <<figures[i]->Area() << '\n';
+        sum_area += figures[i]->Area();
+    }
+    cout << "\nTotal area: " << sum_area;
+    for (int i = 0; i <= figures.size(); ++i) {
+        delete figures[i];
     }
     return 0;
 }
