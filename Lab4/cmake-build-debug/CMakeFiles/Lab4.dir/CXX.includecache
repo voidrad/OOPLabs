@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/YaTeb/CLionProjects/OOPLabs/Lab4/Lab4.cpp
+conio.h
+-
+iostream
+-
+cmath
+-
+tuple
+-
+string
+-
+utility
+-
+limits
+-
+

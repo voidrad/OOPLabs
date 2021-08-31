@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/YaTeb/CLionProjects/OOPLabs/Lab6/Lab6.cpp
+square.hpp
+C:/Users/YaTeb/CLionProjects/OOPLabs/Lab6/square.hpp
+list.hpp
+C:/Users/YaTeb/CLionProjects/OOPLabs/Lab6/list.hpp
+allocator.hpp
+C:/Users/YaTeb/CLionProjects/OOPLabs/Lab6/allocator.hpp
+algorithm
+-
+
+C:/Users/YaTeb/CLionProjects/OOPLabs/Lab6/allocator.hpp
+iostream
+-
+cstdlib
+-
+type_traits
+-
+memory
+-
+stack
+-
+
+C:/Users/YaTeb/CLionProjects/OOPLabs/Lab6/list.hpp
+memory
+-
+cstddef
+-
+
+C:/Users/YaTeb/CLionProjects/OOPLabs/Lab6/square.hpp
+iostream
+-
+type_traits
+-
+

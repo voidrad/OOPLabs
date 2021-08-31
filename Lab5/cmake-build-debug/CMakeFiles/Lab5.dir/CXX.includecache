@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/YaTeb/CLionProjects/OOPLabs/Lab5/Lab5.cpp
+square.hpp
+C:/Users/YaTeb/CLionProjects/OOPLabs/Lab5/square.hpp
+list.hpp
+C:/Users/YaTeb/CLionProjects/OOPLabs/Lab5/list.hpp
+algorithm
+-
+
+C:/Users/YaTeb/CLionProjects/OOPLabs/Lab5/list.hpp
+memory
+-
+iostream
+-
+exception
+-
+iterator
+-
+
+C:/Users/YaTeb/CLionProjects/OOPLabs/Lab5/square.hpp
+iostream
+-
+type_traits
+-
+

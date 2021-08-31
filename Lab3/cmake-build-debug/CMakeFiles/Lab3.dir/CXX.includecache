@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/YaTeb/CLionProjects/OOPLabs/Lab3/Lab3.cpp
+iostream
+-
+cstring
+-
+future
+-
+chrono
+-
+memory
+-
+fstream
+-
+iomanip
+-
+thread
+-
+cmath
+-
+map
+-
+cassert
+-
+algorithm
+-
+
